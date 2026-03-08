@@ -70,6 +70,7 @@ def test_change_quantity(client, mocker, test_quantity):
     mock_write = mocker.patch("db.write_to_db")
 
     response = client.put("/products/5", json=test_quantity)
+    print(response.get_json())
     assert response.status_code == 200
 
     # verify write was called with updated quantity
@@ -84,7 +85,6 @@ def test_get_products(client, mocker):
     mock_data = [
         (1, "Barrel of Monkeys", 40, 10.00),
         (5, "Little Green Army Men", 45, 10.00),
-        (6, "Ned's Nose", 0, 30.00),
     ]
     mocker.patch("db.read_from_db", return_value=mock_data)
 

@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import db
 
 ### Product Catalog ###
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/health")
@@ -23,13 +25,18 @@ def index():
         try:
             result = db.read_from_db(query)
             keys = ["id", "item", "quantity", "price"]
-            return jsonify([dict(zip(keys, row)) for row in result]), 200
+            products = [dict(zip(keys, row)) for row in result]
+            for p in products:
+                p["price"] = float(p["price"])
+            print(type(products[0]["price"]))
+            return jsonify(products), 200
         except Exception as e:
             return jsonify({"error": str(e)}), 500
     else:
         item = request.json["item"]
         quantity = request.json["quantity"]
-        price = request.json["price"]
+        price = float(request.json["price"])
+        print("item:", type(item), "quantity", type(quantity), "price", type(price))
 
         query = "INSERT INTO products (item, quantity, price) VALUES (%s, %s, %s)"
         params = (item, quantity, price)
@@ -51,7 +58,7 @@ def update_quantities(id):
     try:
         results = db.read_from_db(query, params)[0]
         item = results[0]
-        current_quantity = int(results[1])
+        current_quantity = int(results[2])
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -75,4 +82,4 @@ def update_quantities(id):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001)
+    app.run(host="0.0.0.0", port=5001, debug=True)
