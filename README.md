@@ -5,6 +5,8 @@ catalog of my ecommerce application.
 
 ### Directory Structure
 
+```text
+
 products/
 |   .gitignore
 |   pyproject.toml
@@ -18,6 +20,8 @@ products/
 |
 \---tests
         test_products.py
+
+```
 
 
 ### Instructions to build and run product service:
