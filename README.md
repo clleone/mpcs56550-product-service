@@ -3,27 +3,86 @@
 This repository houses all code and configuration files related to the product
 catalog of my ecommerce application.
 
+### Requirements
+- Python 3.11+
+- pip
+- PostgreSQL 15 (or Docker)
+- Git
+
 ### Directory Structure
 ```text
-products/
+|   .env
 |   .gitignore
+|   Dockerfile
+|   Jenkinsfile
 |   pyproject.toml
 |   README.md
 |   requirements.txt
 |   test.py
 |
++---k8s
+|   \---product-service
+|       +---dev
+|       |       configmap.yaml
+|       |       deployment.yaml
+|       |       service.yaml
+|       |
+|       +---prod
+|       |       configmap.yaml
+|       |       deployment.yaml
+|       |       service.yaml
+|       |
+|       \---staging
+|               configmap.yaml
+|               deployment.yaml
+|               service.yaml
+|
 +---src
-|       app.py
-|       db.py
+|   |   app.py
+|   |   db.py
 |
 \---tests
-        test_products.py
+    \--- test_products.py
 ```
 ### Instructions to build and run product service locally:
-- Forthcoming
+```bash
+# Clone the repo
+git clone https://github.com/yourusername/mpcs56550-product-service
+cd mpcs56550-product-service
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Copy environment template and fill in values
+cp .env.example .env
+
+# Run the service
+python src/app.py
+```
+
+Service will be at http://localhost:5001
 
 ### Testing:
-- Forthcoming
+```bash
+# Install test dependencies
+pip install pytest pytest-mock
+
+# Run tests
+python -m pytest tests/
+```
+
+### Docker
+```bash
+# Build the image
+docker build -t product-service .
+
+# Run the container
+docker run -p 5001:5001 \
+  --env-file .env \
+  product-service
+```
+
+See .env.example for reference.
 
 ### GitFlow Overview:
 - **Main** - This branch stores the official release history. All commits here are 
