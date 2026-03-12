@@ -69,7 +69,7 @@ def update_quantities(id):
     else:
         new_quantity = current_quantity - increment
         if new_quantity < 0:
-            return jsonify({"error": "Quantity cannot go below zero."}), 500
+            return jsonify({"error": "Stock quantity must be at least zero."}), 500
 
     # schema: id, item name, quantity, price
     query = "UPDATE products SET quantity = %s WHERE item = %s"
