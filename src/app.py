@@ -8,7 +8,7 @@ from prometheus_flask_exporter import PrometheusMetrics
 app = Flask(__name__)
 CORS(app)
 
-metrics = PrometheusMetrics(app)
+metrics = PrometheusMetrics(app, default_metrics_path="/prometheus-metrics")
 
 
 @app.route("/health")
