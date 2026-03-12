@@ -11,6 +11,7 @@ catalog of my ecommerce application.
 
 ### Directory Structure
 ```text
+products/
 |   .env
 |   .gitignore
 |   Dockerfile
